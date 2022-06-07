@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package customer.api;
+
+// import "google/protobuf/empty.proto";
+import "kalix/annotations.proto";
+
+service UIGatewayService {
+  option (kalix.codegen) = { action: { } };
+
+  rpc getRoles(GetRoles) returns (UserRoles) {}
+
+
+}
+
+message GetRoles { string user_email = 1; }
+message UserRoles { repeated string roles = 1; }
