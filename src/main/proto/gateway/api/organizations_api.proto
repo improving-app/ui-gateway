@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package gateway.organizations.api;
+
+import "gateway/domain/organization_domain.proto";
+import "google/api/annotations.proto";
+import "kalix/annotations.proto";
+
+service OrganizationsApi {
+  option (kalix.codegen) = {
+    event_sourced_entity: {
+      name: "gateway.organizations.domain.OrganizationApi"
+      entity_type: "organization"
+      state: "gateway.organizations.domain.Organization"
+      events: [
+        "gateway.organizations.domain.OrganizationEstablished",
+        "gateway.organizations.domain.Organization",
+        "gateway.organizations.domain.OrganizationInfoUpdated",
+        "gateway.organizations.domain.BaseOrganizationUrlUpdated",
+        "gateway.organizations.domain.NewParentOrgAssigned",
+        "gateway.organizations.domain.OrganizationStateChanged"
+      ]
+    }
+  };
+
+  rpc establishOrganization (EstablishOrganization) returns (gateway.organizations.domain.OrganizationEstablished) {
+    option (google.api.http) = {
+      post: "/organizations/establish"
+      body: "*"
+    };
+  }
+
+  rpc getOrganization (GetOrganization) returns (gateway.organizations.domain.Organization) {
+    option (google.api.http) = {
+      get: "/organizations/{oid}"
+    };
+  }
+
+  rpc updateOrganizationInfo (UpdateOrganizationInfo) returns (gateway.organizations.domain.OrganizationInfoUpdated) {
+    option (google.api.http).post = "/organizations/{oid}/update-info";
+  }
+
+  rpc updateBaseOrganizationUrl (UpdateBaseOrganizationUrl) returns (gateway.organizations.domain.BaseOrganizationUrlUpdated) {
+    option (google.api.http).post = "/organizations/{oid}/update-url";
+  }
+
+  rpc assignNewParentOrg (AssignNewParentOrg) returns (gateway.organizations.domain.NewParentOrgAssigned) {
+    option (google.api.http).post = "/organizations/{oid}/assign-parent";
+  }
+
+  rpc changeOrganizationState (ChangeOrganizationState) returns (gateway.organizations.domain.OrganizationStateChanged) {
+    option (google.api.http).post = "/organizations/{oid}/change-state";
+  }
+}
+
+message EstablishOrganization {
+  gateway.organizations.domain.OrganizationInfo base_info =1 ;
+  optional string parent_org = 2;
+}
+
+message GetOrganization {
+  string organization_id = 1;
+}
+
+message UpdateOrganizationInfo {
+  gateway.organizations.domain.OrganizationInfo new_info = 1;
+}
+
+message UpdateBaseOrganizationUrl {
+  string org_id = 1;
+  string new_url = 2;
+}
+
+message AssignNewParentOrg {
+  string org_id = 1;
+  string parent_org_id = 2;
+}
+
+message ChangeOrganizationState {
+  string org_id = 1;
+  gateway.organizations.domain.OrgState new_state = 2;
+}
+
+message TerminateOrganization {
+  string organization_id = 1;
+}

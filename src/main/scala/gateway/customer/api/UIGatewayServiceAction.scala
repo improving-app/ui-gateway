@@ -1,4 +1,4 @@
-package customer.api
+package gateway.customer.api
 
 import kalix.scalasdk.action.Action
 import kalix.scalasdk.action.ActionCreationContext
@@ -10,13 +10,8 @@ import kalix.scalasdk.action.ActionCreationContext
 
 class UIGatewayServiceAction(creationContext: ActionCreationContext) extends AbstractUIGatewayServiceAction {
 
-  /** Get the logged in user's permitted roles */
   override def getRoles(getRoles: GetRoles): Action.Effect[UserRoles] = {
-    if (getRoles.userEmail.isEmpty) {
-      effects.error("Unspecified email address")
-    } else {
-      effects.reply(UserRoles(Seq("User")))
-    }
+    throw new RuntimeException("The command handler for `getRoles` is not implemented, yet")
   }
 }
 

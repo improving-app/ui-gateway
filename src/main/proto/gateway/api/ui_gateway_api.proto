@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package customer.api;
+package gateway.customer.api;
 
 // import "google/protobuf/empty.proto";
 import "kalix/annotations.proto";
