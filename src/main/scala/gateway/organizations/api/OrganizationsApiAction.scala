@@ -1,8 +1,7 @@
 package gateway.organizations.api
 
 import gateway.organizations.domain.{OrgType, OrganizationEstablished}
-import kalix.scalasdk.action.Action
-import kalix.scalasdk.action.ActionCreationContext
+import kalix.scalasdk.action.{Action, ActionCreationContext}
 
 import java.util.UUID
 
@@ -12,14 +11,15 @@ import java.util.UUID
 // or delete it so it is regenerated as needed.
 
 class OrganizationsApiAction(creationContext: ActionCreationContext) extends AbstractOrganizationsApiAction {
-
-  override def establishOrganization(establishOrganization: EstablishOrganization): Action.Effect[OrganizationEstablished] = {
+  override def establishOrganization(establishOrganization: EstablishOrganizationDto): Action.Effect[OrganizationEstablishedDto] = {
     if(establishOrganization.baseInfo.isEmpty) effects.error("You need to provide organization info to establish an organization")
     else {
-      establishOrganization.parentOrg match {
-        case Some(_) => effects.reply(OrganizationEstablished(UUID.randomUUID().toString, OrgType.ORG_TYPE_SUB))
-        case None => effects.reply(OrganizationEstablished(UUID.randomUUID().toString, OrgType.ORG_TYPE_BASE))
+      val domainResult = establishOrganization.parentOrg match {
+        case Some(_) => OrganizationEstablished(UUID.randomUUID().toString, OrgType.ORG_TYPE_SUB)
+        case None => OrganizationEstablished(UUID.randomUUID().toString, OrgType.ORG_TYPE_BASE)
       }
+
+      effects.reply(OrganizationEstablishedDto.defaultInstance.copy(orgId = domainResult.orgId, `type` = domainResult.`type`.name))
     }
   }
 }
