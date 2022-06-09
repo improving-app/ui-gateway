@@ -11,7 +11,11 @@ import kalix.scalasdk.action.ActionCreationContext
 class UIGatewayServiceAction(creationContext: ActionCreationContext) extends AbstractUIGatewayServiceAction {
 
   override def getRoles(getRoles: GetRoles): Action.Effect[UserRoles] = {
-    throw new RuntimeException("The command handler for `getRoles` is not implemented, yet")
+    if (getRoles.userEmail.isEmpty) {
+      effects.error("Unspecified email address")
+    } else {
+      effects.reply(UserRoles(Seq("User")))
+    }
   }
 }
 
