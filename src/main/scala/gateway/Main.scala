@@ -1,7 +1,7 @@
 package gateway
 
 import gateway.customer.api.UIGatewayServiceAction
-import gateway.organizations.domain.OrganizationApi
+import gateway.organizations.api.OrganizationsApiAction
 import kalix.scalasdk.Kalix
 import org.slf4j.LoggerFactory
 
@@ -20,7 +20,7 @@ object Main {
     // If you prefer, you may remove this and manually register these components in a
     // `Kalix()` instance.
     KalixFactory.withComponents(
-      new OrganizationApi(_),
+      new OrganizationsApiAction(_),
       new UIGatewayServiceAction(_))
   }
 

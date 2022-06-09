@@ -2,49 +2,11 @@ syntax = "proto3";
 
 package gateway.organizations.domain;
 
-import "kalix/annotations.proto";
-
 option java_outer_classname = "OrganizationDomain";
 
 message OrganizationEstablished {
     string org_id = 1;
-}
-
-message OrganizationInfoUpdated {
-    string org_id = 1;
-}
-
-message BaseOrganizationUrlUpdated {
-    string org_id = 1;
-}
-
-message NewParentOrgAssigned {
-    string org_id = 1;
-}
-
-message OrganizationStateChanged {
-    string org_id = 1;
-}
-
-message Organization {
-    oneof org {
-        BaseOrganization base = 1;
-        SubOrganization sub = 2;
-    }
-}
-
-message BaseOrganization {
-    string oid = 1 [(kalix.field).entity_key = true];
-    OrganizationInfo org_details = 3;
-    string url = 4;
-    OrgState state = 5;
-}
-
-message SubOrganization {
-    string oid = 1 [(kalix.field).entity_key = true];
-    string parent_org = 2 [(kalix.field).entity_key = true];
-    OrganizationInfo org_details = 3;
-    OrgState state = 4;
+    OrgType type = 2;
 }
 
 message OrganizationInfo {
@@ -55,10 +17,8 @@ message OrganizationInfo {
     optional bool is_private = 6;
 }
 
-enum OrgState {
-    ORG_STATE_DRAFT = 0;
-    ORG_STATE_ACTIVE = 1;
-    ORG_STATE_INACTIVE = 2;
-    ORG_STATE_SUSPENDED = 3;
-   ORG_STATE_TERMINATED = 4;
+// for temporary purposes - want to show logic being handled & returned correctly
+enum OrgType {
+    ORG_TYPE_BASE = 0;
+    ORG_TYPE_SUB = 1;
 }
