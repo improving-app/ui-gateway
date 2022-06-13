@@ -1,4 +1,4 @@
-package gateway.customer.api
+package com.improving.app.gateway.api
 
 import kalix.scalasdk.action.Action
 import kalix.scalasdk.action.ActionCreationContext

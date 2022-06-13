@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package gateway.organizations.api;
+package com.improving.app.gateway.api;
 
 import "google/api/annotations.proto";
 import "kalix/annotations.proto";
@@ -10,7 +10,7 @@ service OrganizationsApi {
     action: {}
   };
 
-  rpc establishOrganization (EstablishOrganizationCommand) returns (OrganizationEstablishedEvent) {
+  rpc establishOrganization (EstablishOrganizationCommand) returns (OrganizationEstablishedReply) {
     option (google.api.http) = {
       post: "/organizations"
       body: "*"
@@ -23,7 +23,7 @@ message EstablishOrganizationCommand {
   optional string parent_org = 2;
 }
 
-message OrganizationEstablishedEvent {
+message OrganizationEstablishedReply {
   string org_id = 1;
   OrgType type = 2;
 }

@@ -1,7 +1,5 @@
-package gateway
+package com.improving.app.gateway.api
 
-import gateway.customer.api.UIGatewayServiceAction
-import gateway.organizations.api.OrganizationsApiAction
 import kalix.scalasdk.Kalix
 import org.slf4j.LoggerFactory
 
@@ -12,7 +10,7 @@ import org.slf4j.LoggerFactory
 
 object Main {
 
-  private val log = LoggerFactory.getLogger("gateway.Main")
+  private val log = LoggerFactory.getLogger("com.improving.app.gateway.api.Main")
 
   def createKalix(): Kalix = {
     // The KalixFactory automatically registers any generated Actions, Views or Entities,
