@@ -47,7 +47,7 @@ message Address {
   string line1 = 1;
   string line2 = 2;
   string city = 3;
-  string province = 4;
+  string state_province = 4;
   string country = 5;
   PostalCode postal_code = 6;
 }
