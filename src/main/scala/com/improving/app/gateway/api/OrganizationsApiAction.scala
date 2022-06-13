@@ -14,15 +14,10 @@ import scala.util.matching.Regex
 class OrganizationsApiAction(creationContext: ActionCreationContext) extends AbstractOrganizationsApiAction {
 
   override def establishOrganization(establishOrganizationCommand: EstablishOrganizationCommand): Action.Effect[OrganizationEstablishedReply] = {
-    def checkParentAndReply(orgInfo: OrganizationInfo, parentOrg: Option[String], isPrivate: Option[Boolean]): Action.Effect[OrganizationEstablishedReply] ={
+    def checkIsPrivateAndReply(orgInfo: OrganizationInfo, isPrivate: Option[Boolean]): Action.Effect[OrganizationEstablishedReply] ={
       val info = orgInfo.copy(isPrivate = Some(isPrivate.getOrElse(false)))
 
-      val result = parentOrg match {
-        case Some(_) => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_SUB, Some(info))
-        case None => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_BASE, Some(info))
-      }
-
-      effects.reply(result)
+      effects.reply(OrganizationEstablishedReply(UUID.randomUUID().toString, Some(info)))
     }
 
     establishOrganizationCommand.baseInfo match {
@@ -36,18 +31,18 @@ class OrganizationsApiAction(creationContext: ActionCreationContext) extends Abs
           case None => effects.error("No postal code provided in organization info - cannot establish organization")
           case Some(USPostalCode(uspc, _)) =>
             val regex = new Regex("\\d{5}(-\\d{4})?")
-            if(regex.matches(uspc)) checkParentAndReply(info, parentOrg, isPrivate)
+            if(regex.matches(uspc)) checkIsPrivateAndReply(info, isPrivate)
             else effects.error("US Postal Code provided has invalid format - cannot establish organization")
         }
         else if(region.isCa) region.ca match {
           case None => effects.error("No postal code provided in organization info - cannot establish organization")
           case Some(CAPostalCode(capc, _)) =>
             val regex = new Regex("[A-Z]\\d[A-Z]\\d[A-Z]\\d")
-            if(regex.matches(capc)) checkParentAndReply(info, parentOrg, isPrivate)
+            if(regex.matches(capc)) checkIsPrivateAndReply(info, isPrivate)
             else effects.error("CA Postal Code provided has invalid format - cannot establish organization")
         }
         else effects.error("Postal Code region not valid - cannot establish organization")
-      case Some(orgInfo) => checkParentAndReply(orgInfo, orgInfo.parentOrg, orgInfo.isPrivate)
+      case Some(orgInfo) => checkIsPrivateAndReply(orgInfo, orgInfo.isPrivate)
     }
   }
 }
