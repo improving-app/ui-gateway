@@ -18,8 +18,8 @@ class OrganizationsApiAction(creationContext: ActionCreationContext) extends Abs
       val info = orgInfo.copy(isPrivate = Some(isPrivate.getOrElse(false)))
 
       val result = parentOrg match {
-        case Some(_) => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_SUB)
-        case None => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_BASE)
+        case Some(_) => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_SUB, Some(info))
+        case None => OrganizationEstablishedReply(UUID.randomUUID().toString, OrgType.ORG_TYPE_BASE, Some(info))
       }
 
       effects.reply(result)
