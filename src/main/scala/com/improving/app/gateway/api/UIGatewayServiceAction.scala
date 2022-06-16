@@ -1,4 +1,4 @@
-package customer.api
+package com.improving.app.gateway.api
 
 import kalix.scalasdk.action.Action
 import kalix.scalasdk.action.ActionCreationContext
@@ -8,9 +8,9 @@ import kalix.scalasdk.action.ActionCreationContext
 // As long as this file exists it will not be overwritten: you can maintain it yourself,
 // or delete it so it is regenerated as needed.
 
-class UIGatewayServiceAction(creationContext: ActionCreationContext) extends AbstractUIGatewayServiceAction {
+class UIGatewayServiceAction(creationContext: ActionCreationContext)
+    extends AbstractUIGatewayServiceAction {
 
-  /** Get the logged in user's permitted roles */
   override def getRoles(getRoles: GetRoles): Action.Effect[UserRoles] = {
     if (getRoles.userEmail.isEmpty) {
       effects.error("Unspecified email address")
@@ -19,4 +19,3 @@ class UIGatewayServiceAction(creationContext: ActionCreationContext) extends Abs
     }
   }
 }
-

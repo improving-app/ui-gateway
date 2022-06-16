@@ -2,11 +2,13 @@ name := "improving-ui-gateway"
 
 organization := "improving"
 organizationHomepage := Some(url("https://improving.app"))
-licenses := Seq(("Apache 2", url("https://www.apache.org/licenses/LICENSE-2.0")))
+licenses := Seq(
+  ("Apache 2", url("https://www.apache.org/licenses/LICENSE-2.0"))
+)
 
 scalaVersion := "2.13.8"
 
-enablePlugins(KalixPlugin, JavaAppPackaging, DockerPlugin)
+enablePlugins(KalixPlugin, JavaAppPackaging, DockerPlugin, ScalafmtPlugin)
 dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot"
 dockerUsername := sys.props.get("docker.username")
 dockerRepository := sys.props.get("docker.registry")
@@ -15,7 +17,12 @@ dockerBuildCommand := {
   if (sys.props("os.arch") != "amd64") {
     // use buildx with platform to build supported amd64 images on other CPU architectures
     // this may require that you have first run 'docker buildx create' to set docker buildx up
-    dockerExecCommand.value ++ Seq("buildx", "build", "--platform=linux/amd64", "--load") ++ dockerBuildOptions.value :+ "."
+    dockerExecCommand.value ++ Seq(
+      "buildx",
+      "build",
+      "--platform=linux/amd64",
+      "--load"
+    ) ++ dockerBuildOptions.value :+ "."
   } else dockerBuildCommand.value
 }
 ThisBuild / dynverSeparator := "-"
@@ -26,8 +33,12 @@ Compile / scalacOptions ++= Seq(
   "-feature",
   "-unchecked",
   "-Xlog-reflective-calls",
-  "-Xlint")
-Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-parameters" // for Jackson
+  "-Xlint"
+)
+Compile / javacOptions ++= Seq(
+  "-Xlint:unchecked",
+  "-Xlint:deprecation",
+  "-parameters" // for Jackson
 )
 
 Test / parallelExecution := false
