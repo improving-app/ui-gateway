@@ -31,7 +31,7 @@ jobs:
 
       - name: Build & Run Tests
         run: |
-          sbt -v clean packageBin +coverage +test
+          sbt -v clean packageBin +test
       - name: Cleanup Before Caching
         shell: bash
         run: |
