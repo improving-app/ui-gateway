@@ -8,9 +8,7 @@ import org.scalatest.wordspec.AnyWordSpec
 // As long as this file exists it will not be overwritten: you can maintain it yourself,
 // or delete it so it is regenerated as needed.
 
-class UIGatewayServiceActionSpec
-    extends AnyWordSpec
-    with Matchers {
+class UIGatewayServiceActionSpec extends AnyWordSpec with Matchers {
 
   "UIGatewayServiceAction" must {
 

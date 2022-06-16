@@ -8,7 +8,8 @@ import kalix.scalasdk.action.ActionCreationContext
 // As long as this file exists it will not be overwritten: you can maintain it yourself,
 // or delete it so it is regenerated as needed.
 
-class UIGatewayServiceAction(creationContext: ActionCreationContext) extends AbstractUIGatewayServiceAction {
+class UIGatewayServiceAction(creationContext: ActionCreationContext)
+    extends AbstractUIGatewayServiceAction {
 
   override def getRoles(getRoles: GetRoles): Action.Effect[UserRoles] = {
     if (getRoles.userEmail.isEmpty) {
@@ -18,4 +19,3 @@ class UIGatewayServiceAction(creationContext: ActionCreationContext) extends Abs
     }
   }
 }
-
