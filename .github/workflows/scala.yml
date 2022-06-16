@@ -25,7 +25,7 @@ jobs:
         with:
           files: "test-results/**/*.xml"
           check_run_annotations: all tests, skipped tests
-          check_run_annotations_branch: *
+          check_run_annotations_branch: "*"
   lint:
     runs-on: ubuntu-latest
     steps:
