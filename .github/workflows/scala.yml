@@ -2,33 +2,58 @@ name: Scala CI
 
 on:
   push:
-    branches:
-      - main
-      - MVP
+    branches: [ main, MVP ]
   pull_request:
-    branches:
-      - main
-      - MVP
+    branches: [ main, MVP ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests
-        run: sbt coverage test
-      - name: Coverage Report
-        run: sbt coverageReport
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v2
         with:
-          files: "test-results/**/*.xml"
-          check_run_annotations: all tests, skipped tests
-          check_run_annotations_branch: "*"
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Coursier Caching
+        uses: coursier/cache-action@v6
+
+      - name: Build & Run Tests
+        run: |
+          sbt -v clean packageBin +coverage +test
+      - name: Cleanup Before Caching
+        shell: bash
+        run: |
+          rm -rf "$HOME/.ivy2/local" || true
+          find $HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
+          find $HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
+          find $HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
+          find $HOME/.sbt                              -name "*.lock"               -delete || true
+
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Formatting
         run: sbt scalafmtSbtCheck scalafmtCheck test:scalafmtCheck
+
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Workflow Notification
+        uses: Gamesight/slack-workflow-status@master
+        with:
+          # Required Input
+          repo_token: ${{secrets.API_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK}}
+          # Optional Input
+          channel: '#improving-app-notifications'
+          name: 'GitHub Workflow'
