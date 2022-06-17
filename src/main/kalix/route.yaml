@@ -1,0 +1,11 @@
+corsPolicy:
+  allowMethods:
+  - GET
+  - POST
+  allowOrigins:
+  - https://improving.app
+host: gateway.improving.app
+routes:
+- prefix: /com.improving.app.gateway.api.OrganizationsApi
+  route:
+    service: organizations
