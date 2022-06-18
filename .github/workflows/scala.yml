@@ -54,12 +54,12 @@ jobs:
           find $HOME/.sbt                              -name "*.lock"               -delete || true
 
       - name: Kalix Deploy
-        env:
-          token: ${{ secrets.KALIX_TOKEN }}
-          project: ${{ secrets.KALIX_PROJECT_ID }}
         uses: lightbend/kalix-action@v5
         with:
           cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/improving-ui-gateway:latest"
+          env:
+            token: ${{ secrets.KALIX_TOKEN }}
+            project: ${{ secrets.KALIX_PROJECT_ID }}
 
 #  slack-workflow-status:
 #    if: always()
