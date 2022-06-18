@@ -7,7 +7,7 @@ import sbt.Keys._
 import kalix.sbt.KalixPlugin
 import org.scalafmt.sbt.ScalafmtPlugin
 import sbt.nio.Keys.{ReloadOnSourceChanges, onChangedBuildSource}
-import sbtdynver.DynVerPlugin.autoImport.dynverSeparator
+import sbtdynver.DynVerPlugin.autoImport.{dynverAssertTagVersion, dynverSeparator, dynverVTagPrefix}
 
 // C for Configuration functions
 object C {
@@ -58,6 +58,7 @@ object C {
         Global / cancelable := false, // ctrl-c
         Global / onChangedBuildSource := ReloadOnSourceChanges,
         ThisBuild / dynverSeparator := "-",
+        ThisBuild / dynverVTagPrefix := false,
         ThisBuild / versionScheme := Some("semver-spec"),
         libraryDependencies ++= Seq(
           "org.scalatest" %% "scalatest" % "3.2.12" % Test
