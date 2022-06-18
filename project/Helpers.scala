@@ -1,15 +1,17 @@
 import com.typesafe.sbt.packager.Keys._
 import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.docker.DockerPlugin
-import sbt.{Project, Test, Tests, _}
+import sbt.{Project, Test, Tests, ThisBuild, _}
 import sbt.Keys._
 import kalix.sbt.KalixPlugin
 import org.scalafmt.sbt.ScalafmtPlugin
+import sbt.nio.Keys.{ReloadOnSourceChanges, onChangedBuildSource}
+import sbtdynver.DynVerPlugin.autoImport.dynverSeparator
 
 // C for Configuration functions
 object C {
 
-  val scala3Options = Seq(
+  val scala3Options: Seq[String] = Seq(
     "-target:11",
     "-deprecation",
     "-feature",
@@ -18,7 +20,7 @@ object C {
     "-Xlint"
   )
 
-  val javaOptions = Seq(
+  val javaOptions: Seq[String] = Seq(
     "-Xlint:unchecked",
     "-Xlint:deprecation",
     "-parameters" // for Jackson
@@ -52,12 +54,15 @@ object C {
         },
         run / fork := false,
         Global / cancelable := false, // ctrl-c
+        Global / onChangedBuildSource := ReloadOnSourceChanges,
+        ThisBuild / dynverSeparator := "-",
         libraryDependencies ++= Seq(
           "org.scalatest" %% "scalatest" % "3.2.12" % Test
         ),
         dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
-        dockerUsername := sys.props.get("docker.username"),
-        dockerRepository := sys.props.get("docker.registry"),
+        dockerUsername := None,
+        dockerRepository := None,
+        dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
         dockerBuildCommand := {
           if (sys.props("os.arch") != "amd64") {
