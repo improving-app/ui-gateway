@@ -57,7 +57,7 @@ jobs:
         env:
           token: ${{ secrets.KALIX_TOKEN }}
           project: ${{ secrets.KALIX_PROJECT_ID }}
-        uses: lightbend/kalix-action@v4
+        uses: lightbend/kalix-action@v5
         with:
           cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/improving-ui-gateway:latest"
 
