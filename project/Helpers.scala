@@ -56,6 +56,7 @@ object C {
         Global / cancelable := false, // ctrl-c
         Global / onChangedBuildSource := ReloadOnSourceChanges,
         ThisBuild / dynverSeparator := "-",
+        ThisBuild / versionScheme := Some("semver-spec"),
         libraryDependencies ++= Seq(
           "org.scalatest" %% "scalatest" % "3.2.12" % Test
         ),
