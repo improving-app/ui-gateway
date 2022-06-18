@@ -5,6 +5,7 @@ on:
     branches: [ main, MVP ]
   pull_request:
     branches: [ main, MVP ]
+  workflow_dispatch:
 
 jobs:
   format-check:
