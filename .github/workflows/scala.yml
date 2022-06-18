@@ -44,7 +44,7 @@ jobs:
   deploy:
     uses: lightbend/kalix-action.yml@v4
     with:
-      cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/gateway:latest"
+      cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/improving-ui-gateway:latest"
       env:
         token: ${{ secrets.KALIX_TOKEN }}
         project: ${{ secrets.KALIX_PROJECT_ID }}
