@@ -1,6 +1,7 @@
 import com.typesafe.sbt.packager.Keys._
 import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.docker.DockerPlugin
+import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.Docker
 import sbt.{Project, Test, Tests, ThisBuild, _}
 import sbt.Keys._
 import kalix.sbt.KalixPlugin
@@ -40,6 +41,7 @@ object C {
         licenses := Seq(
           ("Apache 2", url("https://www.apache.org/licenses/LICENSE-2.0"))
         ),
+        Docker/maintainer := "reid.spencer@improving.com",
         scalaVersion := "2.13.8",
         scalacOptions := scala3Options,
         Compile / scalacOptions ++= scala3Options,
@@ -60,9 +62,9 @@ object C {
         libraryDependencies ++= Seq(
           "org.scalatest" %% "scalatest" % "3.2.12" % Test
         ),
-        dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
+        dockerBaseImage := "docker.io/library/eclipse-temurin:17-jre-alpine",
         dockerUsername := None,
-        dockerRepository := None,
+        dockerRepository := Some("us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"),
         dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
         dockerBuildCommand := {
