@@ -24,8 +24,8 @@ jobs:
       - name: Coursier Caching
         uses: coursier/cache-action@v6
 
-      - name: Run scalafmt via sbt
-        run: sbt scalafmtSbtCheck scalafmtCheck test:scalafmtCheck
+#      - name: Run scalafmt via sbt
+#        run: sbt scalafmtSbtCheck scalafmtCheck test:scalafmtCheck
 
       - name: Build, Test, Publish with sbt
         run: |
