@@ -42,7 +42,7 @@ jobs:
 
       - name: Build, Test, Publish with sbt
         run: |
-          sbt -v clean test packageBin Docker/publishLocal
+          sbt -v clean test packageBin Docker/publish
 
       - name: Cleanup Before Caching
         shell: bash
