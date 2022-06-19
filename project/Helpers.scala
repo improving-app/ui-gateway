@@ -7,7 +7,7 @@ import sbt.Keys._
 import kalix.sbt.KalixPlugin
 import org.scalafmt.sbt.ScalafmtPlugin
 import sbt.nio.Keys.{ReloadOnSourceChanges, onChangedBuildSource}
-import sbtdynver.DynVerPlugin.autoImport.{dynverAssertTagVersion, dynverSeparator, dynverVTagPrefix}
+import sbtdynver.DynVerPlugin.autoImport.{dynverSeparator, dynverVTagPrefix}
 
 // C for Configuration functions
 object C {
@@ -41,7 +41,7 @@ object C {
         licenses := Seq(
           ("Apache 2", url("https://www.apache.org/licenses/LICENSE-2.0"))
         ),
-        Docker/maintainer := "reid.spencer@improving.com",
+        Docker / maintainer := "reid.spencer@improving.com",
         scalaVersion := "2.13.8",
         scalacOptions := scala3Options,
         Compile / scalacOptions ++= scala3Options,
@@ -65,13 +65,16 @@ object C {
         ),
         dockerBaseImage := "docker.io/library/eclipse-temurin:17-jre-alpine",
         dockerUsername := None,
-        dockerRepository := Some("us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"),
+        dockerRepository := Some(
+          "us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"
+        ),
         dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
         dockerBuildCommand := {
           if (sys.props("os.arch") != "amd64") {
-            // use buildx with platform to build supported amd64 images on other CPU architectures
-            // this may require that you have first run 'docker buildx create' to set docker buildx up
+            // use buildx with platform to build supported amd64 images on
+            // other CPU architectures this may require that you have first
+            // run 'docker buildx create' to set docker buildx up
             dockerExecCommand.value ++ Seq(
               "buildx",
               "build",
@@ -82,5 +85,4 @@ object C {
         }
       )
   }
-
 }
