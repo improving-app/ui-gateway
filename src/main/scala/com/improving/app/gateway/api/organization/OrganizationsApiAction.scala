@@ -1,4 +1,5 @@
-package com.improving.app.gateway.api
+package com.improving.app.gateway.api.organization
+
 
 import kalix.scalasdk.action.Action
 import kalix.scalasdk.action.ActionCreationContext
@@ -24,7 +25,7 @@ class OrganizationsApiAction(creationContext: ActionCreationContext)
       val info = orgInfo.copy(isPrivate = Some(isPrivate.getOrElse(false)))
 
       effects.reply(
-        OrganizationEstablishedReply(UUID.randomUUID().toString, Some(info))
+        OrganizationEstablishedReply(Some(OrganizationId(UUID.randomUUID().toString)), Some(info))
       )
     }
 
@@ -89,3 +90,4 @@ class OrganizationsApiAction(creationContext: ActionCreationContext)
     }
   }
 }
+

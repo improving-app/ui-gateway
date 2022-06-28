@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package com.improving.app.gateway.api.member;
+
+import "google/api/annotations.proto";
+import "kalix/annotations.proto";
+import "gateway/api/organization/organizations_api.proto";
+
+enum MemberType {
+  Student = 0;
+  FacutlyStaff = 1;
+  Vendor = 2;
+  Sponsor =3;
+  General = 4;
+  Alumni = 5;
+  Parent = 6;
+  Fan = 7;
+}
+
+enum NotificationPreference {
+  Email = 0;
+  SMS = 1;
+}
+
+enum MemberState {
+  Active = 0;
+  Inactive = 1;
+  Suspended = 2;
+  Terminated = 3;
+}
+
+message MemberId {
+  string memberId = 1;
+}
+
+message MemberInfo {
+  string handle = 1;
+  string avatarUrl = 2;
+  string firstName = 3;
+  string lastName = 4;
+  optional string mobileNumber = 5;
+  optional string email = 6;
+  NotificationPreference notificationPreference = 7;
+  bool notificationOptIn = 8;
+  repeated com.improving.app.gateway.api.organization.OrganizationId organizations = 9;
+  string relatedMembers = 10;
+  repeated MemberType memberTypes = 11;
+}
+
+message MemberMetaInfo {
+  sint64 createdOn = 1;
+  MemberId createdBy = 2;
+  sint64 lastModifiedOn = 3;
+  MemberId lastModifiedBy = 4;
+  MemberState memberState = 5;
+}
+
+message MemberData {
+  MemberId memberId = 1;
+  MemberInfo memberInfo =2;
+  MemberMetaInfo memberMetaInfo =3;
+
+}
+
+
+service MemberApi {
+  option (kalix.codegen) = {
+    action: {}
+  };
+
+  rpc registerMember (MemberInfo) returns (MemberData) {
+    option (google.api.http) = {
+      post: "members/*"
+      body: "*"
+    };
+  }
+}
+

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.improving.app.gateway.api;
+package com.improving.app.gateway.api.organization;
 
 import "google/api/annotations.proto";
 import "kalix/annotations.proto";
@@ -22,8 +22,12 @@ message EstablishOrganizationCommand {
   OrganizationInfo base_info = 1;
 }
 
-message OrganizationEstablishedReply {
+message OrganizationId {
   string org_id = 1;
+}
+
+message OrganizationEstablishedReply {
+  OrganizationId org_id = 1;
   OrganizationInfo org_info = 3;
 }
 

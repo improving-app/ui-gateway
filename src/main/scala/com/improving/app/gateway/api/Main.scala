@@ -2,6 +2,8 @@ package com.improving.app.gateway.api
 
 import kalix.scalasdk.Kalix
 import org.slf4j.LoggerFactory
+import com.improving.app.gateway.api.member.MemberApiAction
+import com.improving.app.gateway.api.organization.OrganizationsApiAction
 
 // This class was initially generated based on the .proto definition by Kalix tooling.
 //
@@ -19,8 +21,10 @@ object Main {
     // If you prefer, you may remove this and manually register these components in a
     // `Kalix()` instance.
     KalixFactory.withComponents(
+      new MemberApiAction(_),
       new OrganizationsApiAction(_),
       new UIGatewayServiceAction(_)
+      
     )
   }
 
