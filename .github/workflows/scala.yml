@@ -53,14 +53,6 @@ jobs:
           find $HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
           find $HOME/.sbt                              -name "*.lock"               -delete || true
 
-      - name: Kalix Delete Service
-        uses: lightbend/kalix-action@v5
-        with:
-          cmd: "services delete gateway"
-        env:
-          token: ${{ secrets.KALIX_TOKEN }}
-          project: ${{ secrets.KALIX_PROJECT_ID }}
-
       - name: Kalix Deploy
         uses: lightbend/kalix-action@v5
         with:
