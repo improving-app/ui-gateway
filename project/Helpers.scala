@@ -54,7 +54,7 @@ object C {
           sys.props += "kalix.user-function-interface" -> "0.0.0.0"
           (Compile / run).evaluated
         },
-        run / fork := false,
+        run / fork := true,
         Global / cancelable := false, // ctrl-c
         Global / onChangedBuildSource := ReloadOnSourceChanges,
         ThisBuild / dynverSeparator := "-",
