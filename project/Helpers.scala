@@ -66,7 +66,7 @@ object C {
         dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
         dockerUsername := None,
         dockerRepository := Some(
-          "weinyopp"
+          "docker.io/weinyopp"
         ),
         dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
