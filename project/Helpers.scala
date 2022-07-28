@@ -66,7 +66,7 @@ object C {
         dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
         dockerUsername := None,
         dockerRepository := Some(
-          "us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"
+          "weinyopp"
         ),
         dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
