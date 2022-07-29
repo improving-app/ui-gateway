@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory
 
 object Main {
 
-  private val log =
-    LoggerFactory.getLogger("com.improving.app.gateway.api.Main")
+  private val log = LoggerFactory.getLogger("com.improving.app.gateway.api.Main")
 
   def createKalix(): Kalix = {
     // The KalixFactory automatically registers any generated Actions, Views or Entities,
@@ -19,9 +18,7 @@ object Main {
     // If you prefer, you may remove this and manually register these components in a
     // `Kalix()` instance.
     KalixFactory.withComponents(
-      new OrganizationsApiAction(_),
-      new UIGatewayServiceAction(_)
-    )
+      new UIGatewayServiceAction(_))
   }
 
   def main(args: Array[String]): Unit = {
