@@ -64,8 +64,10 @@ object C {
           "org.scalatest" %% "scalatest" % "3.2.12" % Test
         ),
         dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
-        dockerUsername := Some("yoppworks"),
-        dockerRepository := None,
+        dockerUsername := None,
+        dockerRepository := Some(
+          "us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"
+        ),
         dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
         dockerBuildCommand := {
