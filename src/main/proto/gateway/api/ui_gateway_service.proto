@@ -11,7 +11,11 @@ service UIGatewayService {
     action: {}
   };
 
-  rpc establishOrganization (EstablishOrganizationCommand) returns (OrganizationEstablishedReply) {
+  option (kalix.file).acl = {
+    allow: "*"
+  };
+
+  rpc establishOrganization(EstablishOrganizationCommand) returns (OrganizationEstablishedReply) {
     option (google.api.http) = {
       post: "/organizations"
       body: "*"
