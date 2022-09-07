@@ -5,7 +5,6 @@ package com.improving.app.gateway.api;
 import "google/api/annotations.proto";
 import "kalix/annotations.proto";
 
-/** UI Gateway service*/
 service UIGatewayService {
   option (kalix.codegen) = {
     action: {}
