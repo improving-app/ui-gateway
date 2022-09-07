@@ -6,7 +6,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 import java.util.UUID
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.Failure
+import scala.util.{Failure, Success}
 
 // This class was initially generated based on the .proto definition by Kalix tooling.
 //
@@ -80,7 +80,10 @@ class UIGatewayClientSpec extends AnyWordSpec with Matchers {
           )
         )
         val reply = client.establishOrganization(command)
-        reply.onComplete(_ should be a Failure)
+        reply.onComplete {
+          case Failure(_) => assert(true)
+          case Success(_) => assert(false)
+        }
       }
       "there is an invalid US postal code with a letter (fail)" in {
         val invalidUsPostalCode =
@@ -93,19 +96,29 @@ class UIGatewayClientSpec extends AnyWordSpec with Matchers {
           )
         )
         val reply = client.establishOrganization(command)
-        reply.onComplete(_ should be a Failure)
+        //TODO: turn into function
+        reply.onComplete {
+          case Failure(_) => assert(true)
+          case Success(_) => assert(false)
+        }
       }
       "there is no OrganizationInfo (fail)" in {
         val command = EstablishOrganizationCommand(None)
         val reply = client.establishOrganization(command)
-        reply.onComplete(_ should be a Failure)
+        reply.onComplete {
+          case Failure(_) => assert(true)
+          case Success(_) => assert(false)
+        }
       }
       "there is no PostalCode (fail)" in {
         val command = EstablishOrganizationCommand(
           Some(info.copy(address = Some(caAddress.copy(postalCode = None))))
         )
         val reply = client.establishOrganization(command)
-        reply.onComplete { case Failure(_) => assert(false) }
+        reply.onComplete {
+          case Failure(_) => assert(true)
+          case Success(_) => assert(false)
+        }
       }
     }
   }
