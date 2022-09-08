@@ -11,7 +11,7 @@ import scala.util.matching.Regex
 // or delete it so it is regenerated as needed.
 
 class GatewayServiceAction(@unused creationContext: ActionCreationContext)
-    extends AbstractUIGatewayServiceAction {
+    extends AbstractGatewayServiceAction {
 
   override def establishOrganization(
       establishOrganizationCommand: EstablishOrganizationCommand

@@ -46,9 +46,7 @@ jobs:
 
       - name: kalix-service publish with sbt
         run: |
-          cd kalix-service
-          sbt -v packageBin Docker/publish
-          cd ..
+          sbt -v kalixService/packageBin kalixService/Docker/publish
 
       - name: Cleanup Before Caching
         shell: bash
