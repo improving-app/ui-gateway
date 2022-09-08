@@ -8,7 +8,7 @@ object GatewayClient {
   def initiateClient(): GatewayServiceClient = {
     // Boot akka
     implicit val sys =
-      ActorSystem("UIGatewayClient", ConfigFactory.load("application.conf"))
+      ActorSystem("GatewayClient", ConfigFactory.load("application.conf"))
     //implicit val ec = sys.dispatcher
 
     // Configure the client by code:
