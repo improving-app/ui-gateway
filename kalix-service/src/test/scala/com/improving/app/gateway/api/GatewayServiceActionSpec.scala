@@ -12,7 +12,7 @@ import java.util.UUID
 
 class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
 
-  "UIGatewayServiceAction" must {
+  "GatewayServiceAction" must {
     "handle command establishOrganization where" must {
       val caPostalCode =
         Some(PostalCode(PostalCode.Region.Ca(CAPostalCode("A1B2C3"))))
@@ -49,7 +49,7 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         val replyInfo = command.baseInfo.get.copy(isPrivate = Some(false))
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).reply.orgInfo shouldBe Some(
           replyInfo
         )
@@ -61,7 +61,7 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         val replyInfo = command.baseInfo.get.copy(isPrivate = Some(false))
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).reply.orgInfo shouldBe Some(
           replyInfo
         )
@@ -73,7 +73,7 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         val replyInfo = command.baseInfo.get.copy(isPrivate = Some(false))
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).reply.orgInfo shouldBe Some(
           replyInfo
         )
@@ -90,7 +90,7 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         )
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).isError shouldBe true
       }
       "there is an invalid US postal code with a letter" in {
@@ -105,14 +105,14 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         )
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).isError shouldBe true
       }
       "there is no OrganizationInfo" in {
         val command = EstablishOrganizationCommand(None)
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).isError shouldBe true
       }
       "there is no PostalCode" in {
@@ -121,7 +121,7 @@ class GatewayServiceActionSpec extends AnyWordSpec with Matchers {
         )
 
         val service =
-          UIGatewayServiceActionTestKit(new GatewayServiceAction(_))
+          GatewayServiceActionTestKit(new GatewayServiceAction(_))
         service.establishOrganization(command).isError shouldBe true
       }
     }
