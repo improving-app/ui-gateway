@@ -13,9 +13,9 @@ import scala.util.{Failure, Success}
 // As long as this file exists it will not be overwritten: you can maintain it yourself,
 // or delete it so it is regenerated as needed.
 
-class UIGatewayClientSpec extends AnyWordSpec with Matchers {
+class GatewayClientSpec extends AnyWordSpec with Matchers {
 
-  "UIGatewayClient" must {
+  "GatewayClient" must {
     "receive appropriate reply upon calling establishOrganization, where" must {
       val caPostalCode =
         Some(PostalCode(PostalCode.Region.Ca(CAPostalCode("A1B2C3"))))
@@ -46,7 +46,7 @@ class UIGatewayClientSpec extends AnyWordSpec with Matchers {
         isPrivate = None,
         url = None
       )
-      val client = UIGatewayClient.initiateClient()
+      val client = GatewayClient.initiateClient()
       "there is no parent (success)" in {
         val command = EstablishOrganizationCommand(Some(info))
         val replyInfo = command.baseInfo.get.copy(isPrivate = Some(false))

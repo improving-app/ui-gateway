@@ -4,8 +4,8 @@ import akka.actor.ActorSystem
 import akka.grpc.GrpcClientSettings
 import com.typesafe.config.ConfigFactory
 
-object UIGatewayClient {
-  def initiateClient(): UIGatewayServiceClient = {
+object GatewayClient {
+  def initiateClient(): GatewayServiceClient = {
     // Boot akka
     implicit val sys =
       ActorSystem("UIGatewayClient", ConfigFactory.load("application.conf"))
@@ -16,6 +16,6 @@ object UIGatewayClient {
       .connectToServiceAt("gateway.improving.app", 443)
       .withTls(true)
 
-    UIGatewayServiceClient(clientSettings)
+    GatewayServiceClient(clientSettings)
   }
 }
