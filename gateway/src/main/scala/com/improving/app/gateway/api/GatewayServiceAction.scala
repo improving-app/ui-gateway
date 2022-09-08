@@ -1,18 +1,17 @@
 package com.improving.app.gateway.api
 
-import kalix.scalasdk.action.Action
-import kalix.scalasdk.action.ActionCreationContext
+import kalix.scalasdk.action.{Action, ActionCreationContext}
 
 import java.util.UUID
+import scala.annotation.unused
 import scala.util.matching.Regex
-
 // This class was initially generated based on the .proto definition by Kalix tooling.
 //
 // As long as this file exists it will not be overwritten: you can maintain it yourself,
 // or delete it so it is regenerated as needed.
 
-class UIGatewayServiceAction(creationContext: ActionCreationContext)
-    extends AbstractUIGatewayServiceAction {
+class GatewayServiceAction(@unused creationContext: ActionCreationContext)
+    extends AbstractGatewayServiceAction {
 
   override def establishOrganization(
       establishOrganizationCommand: EstablishOrganizationCommand
@@ -48,7 +47,7 @@ class UIGatewayServiceAction(creationContext: ActionCreationContext)
               _,
               _,
               Some(Address(_, _, _, _, _, Some(PostalCode(region, _)), _)),
-              parentOrg,
+              _,
               _,
               isPrivate,
               _,

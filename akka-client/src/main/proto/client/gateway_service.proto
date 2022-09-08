@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+package com.improving.app.gateway.client;
+
+import "gateway/gateway_service.proto";
