@@ -6,11 +6,11 @@ lazy val akkaClient = project
   .in(file("akka-client"))
   .configure(C.basic)
   .enablePlugins(AkkaGrpcPlugin)
-  .dependsOn(kalixService, kalixService % "protobuf")
+  .dependsOn(gateway, gateway % "protobuf")
 
-lazy val kalixService = project
-  .in(file("kalix-service"))
-  .configure(C.kalix("kalix-service"))
+lazy val gateway = project
+  .in(file("gateway"))
+  .configure(C.kalix("improving-app-gateway"))
   .settings(
     Compile / unmanagedResourceDirectories += sourceDirectory.value / "main" / "proto"
   )
