@@ -40,14 +40,14 @@ jobs:
         run: |
           gcloud auth configure-docker us-east1-docker.pkg.dev
 
-      - name: Test All Projects
+      - name: Build & Test All Projects
         run: |
-          sbt test
+          sbt -v clean test
 
-      - name: kalix-service Build, Test, Publish with sbt
+      - name: kalix-service publish with sbt
         run: |
           cd kalix-service
-          sbt -v clean packageBin Docker/publish
+          sbt -v packageBin Docker/publish
           cd ..
 
       - name: Cleanup Before Caching
