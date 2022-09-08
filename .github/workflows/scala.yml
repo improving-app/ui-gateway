@@ -46,7 +46,7 @@ jobs:
 
       - name: kalix-service publish with sbt
         run: |
-          sbt -v kalixService/packageBin kalixService/Docker/publish
+          sbt -v gateway/packageBin gateway/Docker/publish
 
       - name: Cleanup Before Caching
         shell: bash
@@ -60,7 +60,7 @@ jobs:
       - name: Kalix Deploy
         uses: lightbend/kalix-action@v5
         with:
-          cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/kalix-service:latest"
+          cmd: "services deploy gateway ${{ secrets.REPO_HOST }}/improving-app-gateway:latest"
         env:
           token: ${{ secrets.KALIX_TOKEN }}
           project: ${{ secrets.KALIX_PROJECT_ID }}
