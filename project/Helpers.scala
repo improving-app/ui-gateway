@@ -1,9 +1,12 @@
 import com.typesafe.sbt.packager.Keys._
 import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.docker.DockerPlugin
+import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.Docker
 import kalix.sbt.KalixPlugin
 import sbt.Keys._
+import sbt.nio.Keys.{ReloadOnSourceChanges, onChangedBuildSource}
 import sbt.{Project, Test, Tests, _}
+import sbtdynver.DynVerPlugin.autoImport.{dynverSeparator, dynverVTagPrefix}
 import sbtprotoc.ProtocPlugin.autoImport.PB
 
 // C for Configuration functions
@@ -44,6 +47,7 @@ object C {
 
   def basic(project: Project): Project = {
     project.settings(
+      Docker / maintainer := "reid.spencer@improving.com",
       organization := "com.improving",
       organizationHomepage := Some(url("https://improving.app")),
       licenses := Seq(
@@ -61,7 +65,10 @@ object C {
       ),
       Compile / PB.protoSources ++= Seq(
         baseDirectory.value.getParentFile / "api" / "src" / "proto"
-      )
+      ),
+      ThisBuild / dynverSeparator := "-",
+      ThisBuild / dynverVTagPrefix := false,
+      ThisBuild / versionScheme := Some("semver-spec")
     )
   }
 
@@ -76,11 +83,15 @@ object C {
           sys.props += "kalix.user-function-interface" -> "0.0.0.0"
           (Compile / run).evaluated
         },
-        run / fork := false,
-        Global / cancelable := false, // ctrl-c
+        run / fork := true,
+        Global / cancelable := false,
+        Global / onChangedBuildSource := ReloadOnSourceChanges,
         dockerBaseImage := "docker.io/library/adoptopenjdk:11-jre-hotspot",
-        dockerUsername := sys.props.get("docker.username"),
-        dockerRepository := sys.props.get("docker.registry"),
+        dockerUsername := None,
+        dockerRepository := Some(
+          "us-east1-docker.pkg.dev/hardy-beach-350414/improving-app-images"
+        ),
+        dockerExposedPorts += 8080,
         dockerUpdateLatest := true,
         dockerBuildCommand := {
           if (sys.props("os.arch") != "amd64") {
